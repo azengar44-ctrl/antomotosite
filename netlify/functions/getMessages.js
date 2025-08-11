@@ -8,17 +8,12 @@ export const handler = async (event, context) => {
 
   try {
     const sql = neon();
-    const rows = await sql.begin(async (tx) => {
-      await tx`set local app.user_id = ${user.sub}`;
-      const r = await tx`
-        select id, name, email, body, source_path, created_at
-        from public.messages
-        where user_id = current_setting('app.user_id')::uuid
-        order by created_at desc
-      `;
-      return r;
-    });
-
+    await sql`set local app.user_id = ${user.sub}`;
+    const rows = await sql`
+      select id, name, email, body, source_path, created_at
+      from public.messages
+      where user_id = current_setting('app.user_id')::uuid
+      order by created_at desc`;
     return { statusCode: 200, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(rows) };
   } catch (e) {
     return { statusCode: 500, body: 'DB error' };
