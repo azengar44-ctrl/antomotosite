@@ -23,16 +23,20 @@ export const handler = async (event) => {
     });
     const data = schema.parse(JSON.parse(event.body || '{}'));
 
-    if (data.user_id) {
-      await sql`set local app.user_id = ${data.user_id}`;
-      await sql`
-        insert into public.messages (user_id, name, email, body, source_path)
-        values (${data.user_id}::uuid, ${data.name}, ${data.email}, ${data.message}, ${data.source_path || '/'})`;
-    } else {
-      await sql`
-        insert into public.messages (user_id, name, email, body, source_path)
-        values (null, ${data.name}, ${data.email}, ${data.message}, ${data.source_path || '/'})`;
-    }
+    await sql.begin(async (tx) => {
+      if (data.user_id) {
+        await tx`set local app.user_id = ${data.user_id}`;
+        await tx`
+          insert into public.messages (user_id, name, email, body, source_path)
+          values (${data.user_id}::uuid, ${data.name}, ${data.email}, ${data.message}, ${data.source_path || '/'})
+        `;
+      } else {
+        await tx`
+          insert into public.messages (user_id, name, email, body, source_path)
+          values (null, ${data.name}, ${data.email}, ${data.message}, ${data.source_path || '/'})
+        `;
+      }
+    });
 
     return { statusCode: 200, headers, body: JSON.stringify({ ok: true }) };
   } catch (e) {
