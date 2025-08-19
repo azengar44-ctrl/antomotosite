@@ -1,0 +1,32 @@
+:root {
+  --primary:#0d6efd;
+  --bg:#f8f9fa;
+  --text:#212529;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);} 
+.header{background:white;border-bottom:1px solid #ddd;padding:0.5rem 1rem;display:flex;align-items:center;justify-content:space-between;}
+.brand{display:flex;align-items:center;font-weight:bold;font-size:1.2rem;}
+.brand img{height:40px;margin-right:0.5rem;}
+.nav-links a{margin:0 0.5rem;color:var(--text);text-decoration:none;}
+.nav-links a:hover{color:var(--primary);}
+.container{max-width:960px;margin:auto;padding:1rem;}
+.hero{position:relative;height:260px;display:flex;align-items:center;justify-content:center;color:white;background:#333 url('https://via.placeholder.com/960x260') center/cover no-repeat;}
+.hero .veil{position:absolute;inset:0;background:rgba(0,0,0,.5);} 
+.hero .copy{position:relative;text-align:center;}
+.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));margin-top:1rem;}
+.card{background:white;border-radius:4px;overflow:hidden;box-shadow:0 2px 4px rgba(0,0,0,.1);}
+.card .thumb{height:150px;background-size:cover;background-position:center;}
+.card .content{padding:1rem;}
+.btn{display:inline-block;background:var(--primary);color:white;border:none;padding:0.5rem 1rem;border-radius:4px;cursor:pointer;}
+.btn:hover{background:#0b5ed7;}
+form{display:flex;flex-direction:column;gap:0.5rem;}
+input,textarea{padding:0.5rem;border:1px solid #ccc;border-radius:4px;}
+.footer{text-align:center;padding:1rem;font-size:0.875rem;color:#555;}
+.avatar-btn{background:none;border:none;display:flex;align-items:center;cursor:pointer;color:var(--text);font:inherit;}
+.avatar-btn img{width:32px;height:32px;border-radius:50%;margin-right:0.5rem;}
+.menu{position:absolute;top:120%;right:0;background:white;border:1px solid #ccc;border-radius:4px;display:none;flex-direction:column;min-width:150px;z-index:10;}
+.menu.open{display:flex;}
+.menu a,.menu button{padding:0.5rem 1rem;text-align:left;background:none;border:none;color:var(--text);cursor:pointer;text-decoration:none;}
+.menu a:hover,.menu button:hover{background:#f0f0f0;}
+.hidden{display:none;}
